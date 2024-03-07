@@ -1,0 +1,128 @@
+package pepse.world;
+
+import danogl.GameObject;
+import danogl.collisions.Collision;
+import danogl.collisions.GameObjectCollection;
+import danogl.gui.ImageReader;
+import danogl.gui.UserInputListener;
+import danogl.gui.rendering.AnimationRenderable;
+import danogl.gui.rendering.ImageRenderable;
+import danogl.gui.rendering.OvalRenderable;
+import danogl.gui.rendering.Renderable;
+import danogl.util.Vector2;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+/**
+ * @author עמרי באום
+ */
+public class Avatar extends GameObject {
+    private static final float VELOCITY_X = 400;
+    private static final float VELOCITY_Y = -650;
+    private static final float GRAVITY = 600;
+    private static final Color AVATAR_COLOR = Color.DARK_GRAY;
+    private static final float FIFTY = 50;
+    private static final String TERRAIN = "ground";
+    private static final float MIN_JUMP_ENERGY = 10;
+    private static final float ZERO = 0;
+    private static final float ONE = 1;
+    private static final float MIN_MOVE_ENERGY = 0.5F;
+    private static final float MAX_ENERGY = 100;
+    String[] stand_set = new String[] {"assets/idle_0.png", "assets/idle_1.png",
+            "assets/idle_2.png","assets/idle_3.png"};
+    String[] jump_set = new String[] {"assets/jump_0.png", "assets/jump_1.png",
+            "assets/jump_2.png","assets/jump_3.png"};
+    String[] move_set = new String[] {"assets/run_0.png", "assets/run_1.png",
+            "assets/run_2.png","assets/run_3.png", "assets/run_4.png", "assets/run_5.png"};
+
+    private UserInputListener inputListener;
+    private ImageReader imageReader;
+    private float Energy;
+    private boolean AirFlag;
+    private boolean MoveFlag;
+    private AnimationRenderable standing;
+    private AnimationRenderable jumping;
+    private AnimationRenderable moving;
+    public EnergyUpdateCallback callback = () -> Energy;
+
+    /**
+     *
+     * @param pos initial position
+     * @param inputListener for moving the avatar
+     * @param imageReader to read avatar image
+     */
+    public Avatar(Vector2 pos,
+                  UserInputListener inputListener,
+                  ImageReader imageReader) {
+        super(new Vector2(pos.x() , pos.y() - FIFTY),
+                Vector2.ONES.mult(FIFTY),
+                imageReader.readImage("idle_0.png",
+                        true));
+        physics().preventIntersectionsFromDirection(Vector2.ZERO);
+        transform().setAccelerationY(GRAVITY);
+        this.inputListener = inputListener;
+        this.imageReader = imageReader;
+        this.Energy = 0f;
+//        this.Energy = 100;
+        this.AirFlag = true;
+        this.MoveFlag = false;
+        this.standing =
+                new AnimationRenderable(stand_set,imageReader,true,0.1);
+        this.jumping =
+                new AnimationRenderable(jump_set,imageReader,true,0.1);
+        this.moving =
+                new AnimationRenderable(move_set,imageReader,true,0.1);
+    }
+
+    @Override
+    public void onCollisionEnter(GameObject other, Collision collision) {
+        super.onCollisionEnter(other, collision);
+        if(other.getTag().equals("fruit")){
+            this.Energy = Math.min(Energy + MIN_JUMP_ENERGY, MAX_ENERGY);
+        }
+    }
+
+    public float getenergy(){
+    return Energy;
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        float xVel = ZERO;
+        if(inputListener.isKeyPressed(KeyEvent.VK_LEFT)&&
+                Energy >= MIN_MOVE_ENERGY){
+            this.Energy -= MIN_MOVE_ENERGY;
+            xVel -= VELOCITY_X;
+            renderer().setRenderable(moving);
+        }
+        else if(inputListener.isKeyPressed(KeyEvent.VK_RIGHT) &&
+                Energy >= MIN_MOVE_ENERGY){
+            this.Energy -= MIN_MOVE_ENERGY;
+            xVel += VELOCITY_X;
+            renderer().setRenderable(moving);
+        }
+        else if(inputListener.isKeyPressed(KeyEvent.VK_SPACE) &&
+                getVelocity().y() == ZERO &&
+                Energy >= MIN_JUMP_ENERGY){
+            this.Energy -= MIN_JUMP_ENERGY;
+            transform().setVelocityY(VELOCITY_Y);
+            renderer().setRenderable(jumping);
+        }
+        else if(getVelocity().y() == 0 &&
+                inputListener.isKeyPressed(KeyEvent.VK_RIGHT)  == false &&
+                inputListener.isKeyPressed(KeyEvent.VK_LEFT)  == false){
+            renderer().setRenderable(standing);
+            this.Energy = Math.min(MAX_ENERGY,Energy + ONE);
+        }
+        transform().setVelocityX(xVel);
+
+    }
+};
+
+
+
+
+
