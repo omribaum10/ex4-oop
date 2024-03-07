@@ -1,12 +1,17 @@
 package pepse.world;
 
+import danogl.GameManager;
 import danogl.GameObject;
-import danogl.collisions.Collision;
+import danogl.components.GameObjectPhysics;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
-public class Fruit extends GameObject {
-    public static final String FRUIT_TAG = "fruit";
+/**
+ * class for blocks crating the world
+ * @author עמרי באום
+ */
+public class Block extends GameObject {
+    public static final int SIZE = 30;
     /**
      * Construct a new GameObject instance.
      *
@@ -16,20 +21,10 @@ public class Fruit extends GameObject {
      * @param renderable    The renderable representing the object. Can be null, in which case
      *                      the GameObject will not be rendered.
      */
-    public Fruit(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable) {
+    public Block(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable) {
         super(topLeftCorner, dimensions, renderable);
-    }
+        physics().preventIntersectionsFromDirection(Vector2.ZERO);
+        physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
 
-    @Override
-    public void onCollisionEnter(GameObject other, Collision collision) {
-        super.onCollisionEnter(other, collision);
-        if(other.getTag().equals("avatar")){
-            //TODO MAKE THE FRUIT GIVE 10 POINTS AND DISAPPEAR AND REAPPEAR
-        }
-    }
-
-    @Override
-    public String getTag() {
-        return FRUIT_TAG;
     }
 }

@@ -16,7 +16,7 @@ import java.util.Random;
 public class Tree extends GameObject {
     private static final Color TREECOLOR = new Color(100, 50, 20);
     private static final Color LEAF_COLOR = new Color(50,200,30);
-    private static final Color FRUIT_COLOR = new Color(250,250,0);
+    private static final Color FRUIT_COLOR = new Color(80,20,70);
     private static final int PROBABILITYHIGH = 8;
     private static final int PROBABILITYLOW = 5;
     private static final int HALFOFLEAFSQURE = 2;
@@ -96,6 +96,7 @@ public class Tree extends GameObject {
                 leaf.setTag(Leaf.LEAF);
                 lst.add(leaf);
                 }
+                //TODO makr another 2d loop anf make the fruits be able apear on a leaf
                 else{
                     Fruit fruit =
                             new Fruit(new Vector2(new_min_range + (col * Block.SIZE),
