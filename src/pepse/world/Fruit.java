@@ -26,7 +26,7 @@ public class Fruit extends GameObject {
         if(other.getTag().equals("avatar")){
             //TODO MAKE THE FRUIT GIVE 10 POINTS AND DISAPPEAR AND REAPPEAR
         }
-    }
+    }//
 
     @Override
     public String getTag() {
