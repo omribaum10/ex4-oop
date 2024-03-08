@@ -35,6 +35,7 @@ public class Leaf extends GameObject {
     public Leaf(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable) {
         super(topLeftCorner, dimensions, renderable);
         //angle transition
+        this.setTag(LEAF);
 
         new ScheduledTask(
                 this,delay_time,
@@ -56,4 +57,5 @@ public class Leaf extends GameObject {
                 Transition.LINEAR_INTERPOLATOR_FLOAT, 1,
                 Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
     }
+
 }

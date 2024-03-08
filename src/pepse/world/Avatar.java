@@ -19,6 +19,10 @@ import java.util.ArrayList;
  * @author עמרי באום
  */
 public class Avatar extends GameObject {
+    /**
+     * the avatar tag to validate in fruit colision
+     */
+    public static final String AVATAR_TAG = "avatar";
     private static final float VELOCITY_X = 400;
     private static final float VELOCITY_Y = -650;
     private static final float GRAVITY = 600;
@@ -74,14 +78,22 @@ public class Avatar extends GameObject {
                 new AnimationRenderable(jump_set,imageReader,true,0.1);
         this.moving =
                 new AnimationRenderable(move_set,imageReader,true,0.1);
+        this.setTag(AVATAR_TAG);
     }
 
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
-        if(other.getTag().equals("fruit")){
+        if(other.getTag().equals(Fruit.FRUIT_TAG)){
             this.Energy = Math.min(Energy + MIN_JUMP_ENERGY, MAX_ENERGY);
         }
+    }
+
+    /***
+     * add to the current energy count in limit of 100
+     */
+    public void addEnergy() {
+        this.Energy = Math.min(Energy + MIN_JUMP_ENERGY, MAX_ENERGY);
     }
 
     public float getenergy(){

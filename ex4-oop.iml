@@ -10,12 +10,11 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../third side libraries java/DanoGameLab 1.1.0/DanoGameLab.jar!/" />
+          <root url="jar://$MODULE_DIR$/../DanoGameLab/DanoGameLab.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../third side libraries java/DanoGameLab 1.1.0/src" />
-          <root url="file://$MODULE_DIR$/src" />
+          <root url="file://$MODULE_DIR$/../DanoGameLab/src" />
         </SOURCES>
       </library>
     </orderEntry>

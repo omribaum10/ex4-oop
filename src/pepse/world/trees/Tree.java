@@ -88,25 +88,23 @@ public class Tree extends GameObject {
         for (int row = 0; row < FULLLEAFSQUARESIZE; row++) {
             for (int col = 1; col <= FULLLEAFSQUARESIZE; col++) {
                 int random = rand.nextInt(FULLLEAFSQUARESIZE);
-                if(random == ZERO || random == ONE || random == HALFOFLEAFSQURE){
-                Leaf leaf = new Leaf(
-                new Vector2(new_min_range + (col * Block.SIZE), new_bootom_range - (row * Block.SIZE)),
-                        new Vector2(Block.SIZE / FULLLEAFSQUARESIZE,Block.SIZE/ FULLLEAFSQUARESIZE),
-                        leaf_image);
-                leaf.setTag(Leaf.LEAF);
-                lst.add(leaf);
-                }
-                //TODO makr another 2d loop anf make the fruits be able apear on a leaf
-                else{
+                if(random >= HALFOFLEAFSQURE){
                     Fruit fruit =
                             new Fruit(new Vector2(new_min_range + (col * Block.SIZE),
                                     new_bootom_range - (row * Block.SIZE)),
                                     new Vector2(Block.SIZE / HALFOFLEAFSQURE,
                                             Block.SIZE/ HALFOFLEAFSQURE),
                                     fruit_image);
-                    fruit.setTag(Fruit.FRUIT_TAG);
                     lst.add(fruit);
                 }
+                if(random <= HALFOFLEAFSQURE){
+                Leaf leaf = new Leaf(
+                new Vector2(new_min_range + (col * Block.SIZE), new_bootom_range - (row * Block.SIZE)),
+                        new Vector2(Block.SIZE / FULLLEAFSQUARESIZE,Block.SIZE/ FULLLEAFSQUARESIZE),
+                        leaf_image);
+                lst.add(leaf);
+                }
+
             }
         }
     }
