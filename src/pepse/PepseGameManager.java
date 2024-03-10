@@ -70,12 +70,12 @@ public class PepseGameManager extends GameManager {
         CreateBlocks(windowDimensions, terrain);
         CreateNight(windowDimensions);
         CreateSun(windowDimensions);
+        CreateTrees(windowDimensions, terrain);
         //check max of two blocks
         float y_rate = Math.max(terrain.groundHeightAt(windowDimensions.x() / TWO),
                 terrain.groundHeightAt(windowDimensions.x() + Block.SIZE/ TWO));
         float x_rate = windowDimensions.x() / TWO;
         Avatar avatar = Create_Avatar(new Vector2(x_rate,y_rate), inputListener, imageReader);
-        CreateTrees(windowDimensions, terrain);
         CreateEnergyBar(avatar);
     }
 
@@ -121,8 +121,7 @@ public class PepseGameManager extends GameManager {
     private Avatar Create_Avatar(Vector2 pos,
             UserInputListener inputListenerser,
                                ImageReader imagereader){
-        Avatar avatar = new Avatar(pos,
-                inputListenerser, imagereader);
+        Avatar avatar = Avatar.getInstance(pos,inputListenerser,imagereader);
         gameObjects().addGameObject(avatar, Layer.DEFAULT);
         return avatar;
     }
@@ -141,29 +140,46 @@ public class PepseGameManager extends GameManager {
      * adds trees and fruits
      * @param windowDimensions to get the range
      */
-    private void CreateTrees(Vector2 windowDimensions, Terrain terrain){
+
+    private void CreateTrees(Vector2 windowDimensions, Terrain terrain) {
         HashMap<Vector2, Tree> map =
-                Flora.createInRange(ZERO, (int)windowDimensions.x(),terrain::groundHeightAt);
-        for(Map.Entry<Vector2, Tree> entry : map.entrySet()){
+                Flora.createInRange(ZERO, (int) windowDimensions.x(), terrain::groundHeightAt);
+        for (Map.Entry<Vector2, Tree> entry : map.entrySet()) {
             Vector2 position = entry.getKey();
             Tree tree = entry.getValue();
-            for(GameObject object : tree.GetList()){
-                if(object.getTag().equals(Leaf.LEAF)){
-                    gameObjects().addGameObject(object,Layer.BACKGROUND);
-                }
-                if(object.getTag().equals(Fruit.FRUIT_TAG)){
-                    gameObjects().addGameObject(object,Layer.STATIC_OBJECTS);
-                }
-                else{
-                    gameObjects().addGameObject(object);
+            for (GameObject object : tree.GetList()) {
+                if (object.getTag().equals(Leaf.LEAF)) {
+                    gameObjects().addGameObject(object, Layer.BACKGROUND);
+                } else {
+                    {
+                        gameObjects().addGameObject(object, Layer.STATIC_OBJECTS);
+                    }
                 }
             }
         }
     }
 
 
-
     public static void main(String[] args) {
         new PepseGameManager().run();
     }
 }
+//    private void CreateTrees(Vector2 windowDimensions, Terrain terrain){
+//        HashMap<Vector2, Tree> map =
+//                Flora.createInRange(ZERO, (int)windowDimensions.x(),terrain::groundHeightAt);
+//        for(Map.Entry<Vector2, Tree> entry : map.entrySet()){
+//            Vector2 position = entry.getKey();
+//            Tree tree = entry.getValue();
+//            for(GameObject object : tree.GetList()){
+//                if(object.getTag().equals(Leaf.LEAF)){
+//                    gameObjects().addGameObject(object,Layer.BACKGROUND);
+//                }
+//                if(object.getTag().equals(Fruit.FRUIT_TAG)){
+//                    gameObjects().addGameObject(object,Layer.STATIC_OBJECTS);
+//                }
+//                else{
+//                    gameObjects().addGameObject(object);
+//                }
+//            }
+//        }
+//    }

@@ -3,14 +3,18 @@ package pepse.world;
 import danogl.GameManager;
 import danogl.GameObject;
 import danogl.components.GameObjectPhysics;
+import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
+import pepse.util.ColorSupplier;
+import pepse.world.trees.AvatarObserver;
+import pepse.world.trees.Tree;
 
 /**
  * class for blocks crating the world
  * @author עמרי באום
  */
-public class Block extends GameObject {
+public class Block extends GameObject implements AvatarObserver {
     public static final int SIZE = 30;
     /**
      * Construct a new GameObject instance.
@@ -27,4 +31,12 @@ public class Block extends GameObject {
         physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
 
     }
+
+    @Override
+    public void updateJump() {
+        RectangleRenderable stem_image =
+                new RectangleRenderable(ColorSupplier.approximateColor(Tree.TREECOLOR));
+        this.renderer().setRenderable(stem_image);
+    }
+
 }

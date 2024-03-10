@@ -1,19 +1,24 @@
 package pepse.world.trees;
 
 import danogl.GameObject;
+import danogl.components.GameObjectPhysics;
 import danogl.gui.rendering.OvalRenderable;
 import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 import pepse.util.ColorSupplier;
+import pepse.world.Avatar;
 import pepse.world.Block;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tree extends GameObject implements AvatarObserver{
-    private static final Color TREECOLOR = new Color(100, 50, 20);
+public class Tree {
+    /**
+     *
+     */
+    public static final Color TREECOLOR = new Color(100, 50, 20);
     private static final Color LEAF_COLOR = new Color(50,200,30);
     private static final Color FRUIT_COLOR = new Color(80,20,70);
     private static final int PROBABILITYHIGH = 8;
@@ -39,31 +44,32 @@ public class Tree extends GameObject implements AvatarObserver{
     public Tree(Vector2 topLeftCorner,
                 Vector2 dimensions,
                 Renderable renderable) {
-        super(topLeftCorner, dimensions, renderable);
         this.lst = new ArrayList<>();
         topleft = topLeftCorner;
         RandomHeightStem();
         Randomleaves();
     }
 
-    /**
-     *
-     */
+
     private void RandomHeightStem(){
         Random rand = new Random();
         int height = rand.nextInt(PROBABILITYHIGH - PROBABILITYLOW + ONE) + PROBABILITYLOW;
         this.StemHeight = height;
         Vector2 stemsize =
-                new Vector2(Block.SIZE, Block.SIZE);
+                new Vector2(Block.SIZE, height *Block.SIZE);
         RectangleRenderable stem_image =
                 new RectangleRenderable(ColorSupplier.approximateColor(TREECOLOR));
-        for (int i = 0; i < height; i++) {
-            Vector2 location =
-                    new Vector2(topleft.x(), topleft.y() - (i * Block.SIZE));
-            lst.add(new Block(location,stemsize,stem_image));
-        }
-
+        Vector2 location =
+                new Vector2(topleft.x(), topleft.y() - ((height - 1) * Block.SIZE));
+        Block stem = new Block(location,stemsize,stem_image);
+        lst.add(stem);
+        Avatar.AddObserver(stem);
+//            GameObject it = new GameObject(location,stemsize,stem_image);
+//            it.physics().preventIntersectionsFromDirection(Vector2.ZERO);
+//            it.physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
+//            lst.add(it);
     }
+
 
     /**
      *
@@ -94,15 +100,17 @@ public class Tree extends GameObject implements AvatarObserver{
                                     new Vector2(Block.SIZE / HALFOFLEAFSQURE,
                                             Block.SIZE/ HALFOFLEAFSQURE),
                                     fruit_image);
+                    Avatar.AddObserver(fruit);
                     lst.add(fruit);
                 }
                 if(random <= HALFOFLEAFSQURE){
                     Leaf leaf = new Leaf(
-                        new Vector2(new_min_range + (col * Block.SIZE),
-                                new_bootom_range - (row * Block.SIZE)),
+                            new Vector2(new_min_range + (col * Block.SIZE),
+                                    new_bootom_range - (row * Block.SIZE)),
                             new Vector2(Block.SIZE / FULLLEAFSQUARESIZE,
                                     Block.SIZE/ FULLLEAFSQUARESIZE),
                             leaf_image);
+                    Avatar.AddObserver(leaf);
                     lst.add(leaf);
                 }
 
@@ -113,12 +121,25 @@ public class Tree extends GameObject implements AvatarObserver{
     public ArrayList<GameObject> GetList(){
         return lst;
     }
-
-    public void updateJump(){
-        for (AvatarObserver obj : lst){
-
-        }
-    }
-
 }
 
+//private void RandomHeightStem(){
+//    Random rand = new Random();
+//    int height = rand.nextInt(PROBABILITYHIGH - PROBABILITYLOW + ONE) + PROBABILITYLOW;
+//    this.StemHeight = height;
+//    Vector2 stemsize =
+//            new Vector2(height * Block.SIZE, Block.SIZE);
+//    RectangleRenderable stem_image =
+//            new RectangleRenderable(ColorSupplier.approximateColor(TREECOLOR));
+//    for (int i = 0; i < height; i++) {
+//        Vector2 location =
+//                new Vector2(topleft.x(), topleft.y() - (i * Block.SIZE));
+//        lst.add(new Block(location,stemsize,stem_image));
+//        Avatar.
+////            GameObject it = new GameObject(location,stemsize,stem_image);
+////            it.physics().preventIntersectionsFromDirection(Vector2.ZERO);
+////            it.physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
+////            lst.add(it);
+//    }
+//
+//}
