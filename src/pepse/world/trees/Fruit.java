@@ -7,6 +7,7 @@ import danogl.gui.rendering.OvalRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 import pepse.PepseGameManager;
+import pepse.util.ColorSupplier;
 import pepse.world.Avatar;
 
 import java.awt.*;
@@ -58,8 +59,7 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
 
     public void updateJump(){
         if(this.getTag().equals(FRUIT_TAG)){
-            int new_tone = PepseGameManager.rand.nextInt(256);
-            OvalRenderable new_image =  new OvalRenderable(new Color(new_tone,new_tone,new_tone));
+            OvalRenderable new_image =  new OvalRenderable(ColorSupplier.approximateColor(Tree.FRUIT_COLOR));
             renderable = new_image;
             this.renderer().setRenderable(new_image);
         }

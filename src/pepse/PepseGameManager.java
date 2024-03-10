@@ -164,22 +164,3 @@ public class PepseGameManager extends GameManager {
         new PepseGameManager().run();
     }
 }
-//    private void CreateTrees(Vector2 windowDimensions, Terrain terrain){
-//        HashMap<Vector2, Tree> map =
-//                Flora.createInRange(ZERO, (int)windowDimensions.x(),terrain::groundHeightAt);
-//        for(Map.Entry<Vector2, Tree> entry : map.entrySet()){
-//            Vector2 position = entry.getKey();
-//            Tree tree = entry.getValue();
-//            for(GameObject object : tree.GetList()){
-//                if(object.getTag().equals(Leaf.LEAF)){
-//                    gameObjects().addGameObject(object,Layer.BACKGROUND);
-//                }
-//                if(object.getTag().equals(Fruit.FRUIT_TAG)){
-//                    gameObjects().addGameObject(object,Layer.STATIC_OBJECTS);
-//                }
-//                else{
-//                    gameObjects().addGameObject(object);
-//                }
-//            }
-//        }
-//    }

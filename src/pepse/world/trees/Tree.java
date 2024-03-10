@@ -20,13 +20,17 @@ public class Tree {
      */
     public static final Color TREECOLOR = new Color(100, 50, 20);
     private static final Color LEAF_COLOR = new Color(50,200,30);
-    private static final Color FRUIT_COLOR = new Color(80,20,70);
+    /**
+     *
+     */
+    public static final Color FRUIT_COLOR = new Color(80,20,70);
     private static final int PROBABILITYHIGH = 8;
     private static final int PROBABILITYLOW = 5;
     private static final int HALFOFLEAFSQURE = 2;
     private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int FULLLEAFSQUARESIZE = 4;
+    private static final int ONE_FACTOR = 1;
     private ArrayList<GameObject> lst;
     private Vector2 topleft;
     private int StemHeight;
@@ -60,14 +64,10 @@ public class Tree {
         RectangleRenderable stem_image =
                 new RectangleRenderable(ColorSupplier.approximateColor(TREECOLOR));
         Vector2 location =
-                new Vector2(topleft.x(), topleft.y() - ((height - 1) * Block.SIZE));
+                new Vector2(topleft.x(), topleft.y() - ((height - ONE_FACTOR) * Block.SIZE));
         Block stem = new Block(location,stemsize,stem_image);
         lst.add(stem);
         Avatar.AddObserver(stem);
-//            GameObject it = new GameObject(location,stemsize,stem_image);
-//            it.physics().preventIntersectionsFromDirection(Vector2.ZERO);
-//            it.physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
-//            lst.add(it);
     }
 
 
@@ -122,24 +122,3 @@ public class Tree {
         return lst;
     }
 }
-
-//private void RandomHeightStem(){
-//    Random rand = new Random();
-//    int height = rand.nextInt(PROBABILITYHIGH - PROBABILITYLOW + ONE) + PROBABILITYLOW;
-//    this.StemHeight = height;
-//    Vector2 stemsize =
-//            new Vector2(height * Block.SIZE, Block.SIZE);
-//    RectangleRenderable stem_image =
-//            new RectangleRenderable(ColorSupplier.approximateColor(TREECOLOR));
-//    for (int i = 0; i < height; i++) {
-//        Vector2 location =
-//                new Vector2(topleft.x(), topleft.y() - (i * Block.SIZE));
-//        lst.add(new Block(location,stemsize,stem_image));
-//        Avatar.
-////            GameObject it = new GameObject(location,stemsize,stem_image);
-////            it.physics().preventIntersectionsFromDirection(Vector2.ZERO);
-////            it.physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
-////            lst.add(it);
-//    }
-//
-//}

@@ -18,6 +18,9 @@ public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver
     private static final float LOW_WIDTH_BOUND = 7f;
     private static final float HIGH_WIDTH_BOUND = 10f;
     private static final Color COLOR = new Color(50,200,30);
+    private static final float DEGREES_ANGLE = 90;
+    private static final float SHORT_TRANS = 1;
+    private static final float LONG_TRANS = 2;
     private int delay_time = PepseGameManager.rand.nextInt(10);
 
 
@@ -47,19 +50,19 @@ public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver
         new Transition<>(this,
                 (angle)-> this.renderer().setRenderableAngle((float)angle),
                 LOW_ANGLE_BOUND, HIGH_ANGLE_BOUND,
-                Transition.LINEAR_INTERPOLATOR_FLOAT, 2,
+                Transition.LINEAR_INTERPOLATOR_FLOAT, LONG_TRANS,
                 Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
 
         //width transition
         new Transition<>(this,
                 (width)->this.setDimensions(new Vector2(width,width)),
                 LOW_WIDTH_BOUND, HIGH_WIDTH_BOUND,
-                Transition.LINEAR_INTERPOLATOR_FLOAT, 1,
+                Transition.LINEAR_INTERPOLATOR_FLOAT, SHORT_TRANS,
                 Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
     }
 
     public void updateJump(){
-        this.renderer().setRenderableAngle(renderer().getRenderableAngle() - 90);
+        this.renderer().setRenderableAngle(renderer().getRenderableAngle() - DEGREES_ANGLE);
     }
 
 }
