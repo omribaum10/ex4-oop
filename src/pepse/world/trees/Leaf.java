@@ -62,7 +62,14 @@ public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver
     }
 
     public void updateJump(){
-        this.renderer().setRenderableAngle(renderer().getRenderableAngle() - DEGREES_ANGLE);
+        new Transition<>(
+                this,
+                (angle)-> this.renderer().setRenderableAngle((float)angle),
+                this.renderer().getRenderableAngle(),
+                this.renderer().getRenderableAngle() + DEGREES_ANGLE,
+                Transition.CUBIC_INTERPOLATOR_FLOAT,
+                1, Transition.TransitionType.TRANSITION_ONCE,
+                null);
     }
 
 }
