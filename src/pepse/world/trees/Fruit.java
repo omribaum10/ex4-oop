@@ -1,12 +1,13 @@
-package pepse.world;
+package pepse.world.trees;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
 import danogl.components.ScheduledTask;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
+import pepse.world.Avatar;
 
-public class Fruit extends GameObject {
+public class Fruit extends GameObject implements AvatarObserver{
     public static final String FRUIT_TAG = "fruit";
     public static final String DELAYED_FRUIT_TAG = "delayed fruit";
     public static final int DELAY_TIME = 30;
@@ -44,5 +45,9 @@ public class Fruit extends GameObject {
     private void activateFruit(){
         this.setTag(FRUIT_TAG);
         this.renderer().setRenderable(renderable);
+    }
+
+    public void updateJump(){
+
     }
 }

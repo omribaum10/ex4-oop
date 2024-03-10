@@ -7,13 +7,12 @@ import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 import pepse.util.ColorSupplier;
 import pepse.world.Block;
-import pepse.world.Fruit;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tree extends GameObject {
+public class Tree extends GameObject implements AvatarObserver{
     private static final Color TREECOLOR = new Color(100, 50, 20);
     private static final Color LEAF_COLOR = new Color(50,200,30);
     private static final Color FRUIT_COLOR = new Color(80,20,70);
@@ -89,8 +88,8 @@ public class Tree extends GameObject {
             for (int col = 1; col <= FULLLEAFSQUARESIZE; col++) {
                 int random = rand.nextInt(FULLLEAFSQUARESIZE);
                 if(random >= HALFOFLEAFSQURE){
-                    Fruit fruit =
-                            new Fruit(new Vector2(new_min_range + (col * Block.SIZE),
+                    Fruit fruit = new Fruit
+                            (new Vector2(new_min_range + (col * Block.SIZE),
                                     new_bootom_range - (row * Block.SIZE)),
                                     new Vector2(Block.SIZE / HALFOFLEAFSQURE,
                                             Block.SIZE/ HALFOFLEAFSQURE),
@@ -98,11 +97,13 @@ public class Tree extends GameObject {
                     lst.add(fruit);
                 }
                 if(random <= HALFOFLEAFSQURE){
-                Leaf leaf = new Leaf(
-                new Vector2(new_min_range + (col * Block.SIZE), new_bootom_range - (row * Block.SIZE)),
-                        new Vector2(Block.SIZE / FULLLEAFSQUARESIZE,Block.SIZE/ FULLLEAFSQUARESIZE),
-                        leaf_image);
-                lst.add(leaf);
+                    Leaf leaf = new Leaf(
+                        new Vector2(new_min_range + (col * Block.SIZE),
+                                new_bootom_range - (row * Block.SIZE)),
+                            new Vector2(Block.SIZE / FULLLEAFSQUARESIZE,
+                                    Block.SIZE/ FULLLEAFSQUARESIZE),
+                            leaf_image);
+                    lst.add(leaf);
                 }
 
             }
@@ -111,6 +112,12 @@ public class Tree extends GameObject {
 
     public ArrayList<GameObject> GetList(){
         return lst;
+    }
+
+    public void updateJump(){
+        for (AvatarObserver obj : lst){
+
+        }
     }
 
 }

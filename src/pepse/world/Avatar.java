@@ -2,18 +2,14 @@ package pepse.world;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
-import danogl.collisions.GameObjectCollection;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
 import danogl.gui.rendering.AnimationRenderable;
-import danogl.gui.rendering.ImageRenderable;
-import danogl.gui.rendering.OvalRenderable;
-import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
+import pepse.world.trees.Fruit;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * @author עמרי באום

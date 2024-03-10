@@ -10,7 +10,7 @@ import pepse.PepseGameManager;
 import java.awt.*;
 import java.util.Random;
 
-public class Leaf extends GameObject {
+public class Leaf extends GameObject implements AvatarObserver{
     public static final String LEAF = "leaf";
     private static final float LOW_ANGLE_BOUND = -30f;
     private static final float HIGH_ANGLE_BOUND = 30f;
@@ -56,6 +56,10 @@ public class Leaf extends GameObject {
                 LOW_WIDTH_BOUND, HIGH_WIDTH_BOUND,
                 Transition.LINEAR_INTERPOLATOR_FLOAT, 1,
                 Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
+    }
+
+    public void updateJump(){
+//TODO
     }
 
 }
