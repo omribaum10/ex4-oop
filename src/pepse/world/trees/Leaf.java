@@ -20,6 +20,7 @@ public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver
     public static final String LEAF = "leaf";
     private static final float LOW_ANGLE_BOUND = -30f;
     private static final float HIGH_ANGLE_BOUND = 30f;
+    private static final float TEN = 10;
     private static final float LOW_WIDTH_BOUND = 7f;
     private static final float HIGH_WIDTH_BOUND = 10f;
     private static final Color COLOR = new Color(50,200,30);
