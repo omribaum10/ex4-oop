@@ -61,7 +61,7 @@ public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver
                 Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
     }
 
-    public void updateJump(){/
+    public void updateJump(){
         new Transition<>(
                 this,
                 (angle)-> this.renderer().setRenderableAngle((float)angle),
