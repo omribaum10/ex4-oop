@@ -9,11 +9,19 @@ import pepse.PepseGameManager;
 
 import java.awt.*;
 
+/***
+ * responsible on sky object
+ */
 public class Sky {
     private static final String DECODE_COLOR = "#80C6E5";
     private static final Color BASIC_SKY_COLOR = Color.decode(DECODE_COLOR);
     private static final String SKY = "sky";
 
+    /***
+     * creates the sky background
+     * @param windowDimensions
+     * @return
+     */
     public static GameObject create(Vector2 windowDimensions){
         GameObject sky = new GameObject(
                 Vector2.ZERO, windowDimensions,

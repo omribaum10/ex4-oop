@@ -13,7 +13,6 @@ import pepse.world.daynight.Night;
 import pepse.world.daynight.Sun;
 import pepse.world.daynight.SunHalo;
 import pepse.world.trees.Flora;
-import pepse.world.trees.Fruit;
 import pepse.world.trees.Leaf;
 import pepse.world.trees.Tree;
 
@@ -32,8 +31,8 @@ public class PepseGameManager extends GameManager {
      */
     public static final Random rand = new Random();
     private static final int SEED = PepseGameManager.rand.nextInt(50);
-    private static final int ZERO = 0;
-    private static final int TWO = 2;
+    private static final int START = 0;
+    private static final int WINDOW_FACTOR = 2;
 
 
      /**
@@ -72,11 +71,11 @@ public class PepseGameManager extends GameManager {
         CreateSun(windowDimensions);
         CreateTrees(windowDimensions, terrain);
         //check max of two blocks
-        float y_rate = Math.max(terrain.groundHeightAt(windowDimensions.x() / TWO),
-                terrain.groundHeightAt(windowDimensions.x() + Block.SIZE/ TWO));
-        float x_rate = windowDimensions.x() / TWO;
-        Avatar avatar = Create_Avatar(new Vector2(x_rate,y_rate), inputListener, imageReader);
-        CreateEnergyBar(avatar);
+        float y_rate = Math.max(terrain.groundHeightAt(windowDimensions.x() / WINDOW_FACTOR),
+                terrain.groundHeightAt(windowDimensions.x() + Block.SIZE/ WINDOW_FACTOR));
+        float x_rate = windowDimensions.x() / WINDOW_FACTOR;
+        Create_Avatar(new Vector2(x_rate,y_rate), inputListener, imageReader);
+        CreateEnergyBar();
     }
 
     /**
@@ -91,7 +90,7 @@ public class PepseGameManager extends GameManager {
      * creates the blocks
      */
     private void CreateBlocks(Vector2 windowDimensions, Terrain terrain){
-        List<Block> lst = terrain.createInRange(ZERO, (int)windowDimensions.x());
+        List<Block> lst = terrain.createInRange(START, (int)windowDimensions.x());
         for (Block block : lst){
             gameObjects().addGameObject(block, Layer.STATIC_OBJECTS);
         }
@@ -130,9 +129,9 @@ public class PepseGameManager extends GameManager {
      * cerates the energybar
      * @param avatar to get energy from
      */
-    private void CreateEnergyBar(Avatar avatar){
+    private void CreateEnergyBar(){
         EnergyBar bar =
-                new EnergyBar(Vector2.ZERO, Vector2.ONES.mult(Block.SIZE),avatar::getenergy);
+                new EnergyBar(Vector2.ZERO, Vector2.ONES.mult(Block.SIZE));
         gameObjects().addGameObject(bar);
     }
 
@@ -143,9 +142,8 @@ public class PepseGameManager extends GameManager {
 
     private void CreateTrees(Vector2 windowDimensions, Terrain terrain) {
         HashMap<Vector2, Tree> map =
-                Flora.createInRange(ZERO, (int) windowDimensions.x(), terrain::groundHeightAt);
+                Flora.createInRange(START, (int) windowDimensions.x(), terrain::groundHeightAt);
         for (Map.Entry<Vector2, Tree> entry : map.entrySet()) {
-            Vector2 position = entry.getKey();
             Tree tree = entry.getValue();
             for (GameObject object : tree.GetList()) {
                 if (object.getTag().equals(Leaf.LEAF)) {

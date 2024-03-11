@@ -6,21 +6,21 @@ import danogl.components.ScheduledTask;
 import danogl.gui.rendering.OvalRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
-import pepse.PepseGameManager;
 import pepse.util.ColorSupplier;
 import pepse.world.Avatar;
 
-import java.awt.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
+/***
+ * responsible on fruit obzect behavior
+ */
 public class Fruit extends GameObject implements pepse.world.trees.AvatarObserver {
-    public static final String FRUIT_TAG = "fruit";
-    public static final String DELAYED_FRUIT_TAG = "delayed fruit";
-    public static final int DELAY_TIME = 30;
-    public static Renderable renderable;
+    private static final String FRUIT = "fruit";
+    private static final String DELAYED_STATE = "delayed fruit";
+    private static final int DELAY_TIME = 30;
+    private static Renderable renderable;
+    private static String state;
+
     /**
-     * Construct a new GameObject instance.
+     * Construct a new fruit GameObject instance.
      *
      * @param topLeftCorner Position of the object, in window coordinates (pixels).
      *                      Note that (0,0) is the top-left corner of the window.
@@ -32,17 +32,24 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
                  Vector2 dimensions,
                  Renderable renderable) {
         super(topLeftCorner, dimensions, renderable);
-        this.setTag(FRUIT_TAG);
+        this.state = FRUIT;
         this.renderable = renderable;
     }
 
+    /***
+     * in case of avatar colision the eneregy will increase by 10 and the fruit will desapear for 30 sec
+     * @param other The GameObject with which a collision occurred.
+     * @param collision Information regarding this collision.
+     *                  A reasonable elastic behavior can be achieved with:
+     *                  setVelocity(getVelocity().flipped(collision.getNormal()));
+     */
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
         if(other.getTag().equals(Avatar.AVATAR_TAG)){
-            if(this.getTag().equals(FRUIT_TAG)){
+            if(state.equals(FRUIT)){
                 Avatar.addEnergy();
-                this.setTag(DELAYED_FRUIT_TAG);
+                state = DELAYED_STATE;
                 this.renderer().setRenderable(null);
                 new ScheduledTask(
                         this, DELAY_TIME,
@@ -53,12 +60,15 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
     }
 
     private void activateFruit(){
-        this.setTag(FRUIT_TAG);
+        state = FRUIT;
         this.renderer().setRenderable(renderable);
     }
 
+    /***
+     * in case the avatar jumped the fruit will change its color
+     */
     public void updateJump(){
-        if(this.getTag().equals(FRUIT_TAG)){
+        if(state.equals(FRUIT)){
             OvalRenderable new_image =  new OvalRenderable(ColorSupplier.approximateColor(Tree.FRUIT_COLOR));
             renderable = new_image;
             this.renderer().setRenderable(new_image);

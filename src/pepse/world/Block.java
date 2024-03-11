@@ -32,6 +32,9 @@ public class Block extends GameObject implements AvatarObserver {
 
     }
 
+    /***
+     * in case the avatar jumped the tree stem will change its color
+     */
     @Override
     public void updateJump() {
         RectangleRenderable stem_image =

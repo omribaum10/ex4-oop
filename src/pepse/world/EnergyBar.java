@@ -13,13 +13,10 @@ import danogl.util.Vector2;
 import java.awt.*;
 import java.util.function.Supplier;
 
+/***
+ * responsible on energy bar object
+ */
 public class EnergyBar extends GameObject {
-
-    private float energyrate;
-    private Supplier<Float> getenergy;
-    private static final int FIFTEEN = 15;
-    private static final String BAR_TAG = "energy";
-    private static final float TWENTYFIVE = 25;
 
     /**
      * Construct a new GameObject instance.
@@ -28,36 +25,23 @@ public class EnergyBar extends GameObject {
      *                      Note that (0,0) is the top-left corner of the window.
      * @param dimensions    Width and height in window coordinates.
      */
-    public EnergyBar(Vector2 topLeftCorner, Vector2 dimensions,
-                     Supplier<Float> energy) {
+    public EnergyBar(Vector2 topLeftCorner, Vector2 dimensions){
         super(topLeftCorner, dimensions, null);
-        this.getenergy = energy;
     }
 
+    /***
+     * present the current energy
+     * @param deltaTime The time elapsed, in seconds, since the last frame. Can
+     *                  be used to determine a new position/velocity by multiplying
+     *                  this delta with the velocity/acceleration respectively
+     *                  and adding to the position/velocity:
+     *                  velocity += deltaTime*acceleration
+     *                  pos += deltaTime*velocity
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        renderer().setRenderable(new TextRenderable(getenergy.get().toString()));
+        renderer().setRenderable(new TextRenderable(Avatar.getenergy().toString()));
     }
-
-    //    public static GameObject Create(Vector2 windowDimensions,
-//                                    UserInputListener inputListener,
-//                                    ImageReader imageReader){
-//        float Barwidth = windowDimensions.x() / FIFTEEN;
-//        float Barheight = windowDimensions.y() / TWENTYFIVE;
-//        RectangleRenderable NightRectangle = new RectangleRenderable(Color.BLACK);
-//        GameObject night = new GameObject(Vector2.ZERO,
-//                new Vector2(Barwidth,Barheight), NightRectangle);
-////        night.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
-//        night.setTag(BAR_TAG);
-//
-//        GameObject avatar = new Avatar(Vector2.ZERO,inputListener,imageReader);
-//        // Creates a energy bar
-//        new Transition<>(night, night.renderer()::setRenderable, 100, 0,
-//                Transition.LINEAR_INTERPOLATOR_FLOAT,
-//                (avatar.callback.GetEnergyRate())->  ,
-//                Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
-//
-//        return night;
-    }
+}
 

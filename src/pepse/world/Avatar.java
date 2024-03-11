@@ -1,31 +1,35 @@
 package pepse.world;
 
 import danogl.GameObject;
-import danogl.collisions.Collision;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
 import danogl.gui.rendering.AnimationRenderable;
 import danogl.util.Vector2;
 import pepse.world.trees.AvatarObserver;
-import pepse.world.trees.Fruit;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+/***
+ * responsible on the avatar singelton
+ */
 public class Avatar extends GameObject{
     private static final double TIME_DELAY = 0.1;
     private static Avatar avatar;
+    /***
+     * the avatar tag to check in fruit colision
+     */
     public static final String AVATAR_TAG = "avatar";
     private static final float VELOCITY_X = 400;
     private static final float VELOCITY_Y = -650;
     private static final float GRAVITY = 600;
     private static final Color AVATAR_COLOR = Color.DARK_GRAY;
-    private static final float FIFTY = 50;
+    private static final float AVATAR_SPACE = 50;
     private static final String TERRAIN = "ground";
     private static final float MIN_JUMP_ENERGY = 10;
-    private static final float ZERO = 0;
-    private static final float ONE = 1;
+    private static final float ZERO_VELOCITY = 0;
+    private static final float ONE_FACTOR = 1;
     private static final float MIN_MOVE_ENERGY = 0.5F;
     private static final float MAX_ENERGY = 100;
     String[] stand_set = new String[] {"assets/idle_0.png", "assets/idle_1.png",
@@ -55,8 +59,8 @@ public class Avatar extends GameObject{
     private Avatar(Vector2 pos,
                   UserInputListener inputListener,
                   ImageReader imageReader) {
-        super(new Vector2(pos.x() , pos.y() - FIFTY),
-                Vector2.ONES.mult(FIFTY),
+        super(new Vector2(pos.x() , pos.y() - AVATAR_SPACE),
+                Vector2.ONES.mult(AVATAR_SPACE),
                 imageReader.readImage("idle_0.png",
                         true));
         physics().preventIntersectionsFromDirection(Vector2.ZERO);
@@ -76,6 +80,14 @@ public class Avatar extends GameObject{
         this.setTag(AVATAR_TAG);
     }
 
+    /***
+     * in case it is exist returs an instance of the single avatar and otherwise
+     * initialze the avatar and returns the instance
+     * @param pos initial position
+     * @param inputListener for moving the avatar
+     * @param imageReader to read avatar image
+     * @return the instance of the single avatar
+     */
     public static Avatar getInstance(Vector2 pos,
                                      UserInputListener inputListener,
                                      ImageReader imageReader ){
@@ -87,16 +99,24 @@ public class Avatar extends GameObject{
     }
 
     /***
-     * add to the current energy count in limit of 100
+     * add 10 to the current energy count in limit of 100
      */
     public static void addEnergy() {
         Energy = Math.min(Energy + MIN_JUMP_ENERGY, MAX_ENERGY);
     }
 
-    public float getenergy(){
-    return Energy;
+    /***
+     * gets the current avatar energy
+     * @return the current avatar energy
+     */
+    public static Float getenergy(){
+        return Energy;
     }
 
+    /***
+     * add observer object
+     * @param observer
+     */
     public static void AddObserver(AvatarObserver observer){
         observers.add(observer);
     }
@@ -107,10 +127,19 @@ public class Avatar extends GameObject{
         }
     }
 
+    /***
+     * updates the avatar movement and related objects
+     * @param deltaTime The time elapsed, in seconds, since the last frame. Can
+     *                  be used to determine a new position/velocity by multiplying
+     *                  this delta with the velocity/acceleration respectively
+     *                  and adding to the position/velocity:
+     *                  velocity += deltaTime*acceleration
+     *                  pos += deltaTime*velocity
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        float xVel = ZERO;
+        float xVel = ZERO_VELOCITY;
         if(inputListener.isKeyPressed(KeyEvent.VK_LEFT)&&
                 Energy >= MIN_MOVE_ENERGY){
             this.Energy -= MIN_MOVE_ENERGY;
@@ -124,7 +153,7 @@ public class Avatar extends GameObject{
             renderer().setRenderable(moving);
         }
         else if(inputListener.isKeyPressed(KeyEvent.VK_SPACE) &&
-                getVelocity().y() == ZERO &&
+                getVelocity().y() == ZERO_VELOCITY &&
                 Energy >= MIN_JUMP_ENERGY){
             this.Energy -= MIN_JUMP_ENERGY;
             transform().setVelocityY(VELOCITY_Y);
@@ -135,7 +164,7 @@ public class Avatar extends GameObject{
                 inputListener.isKeyPressed(KeyEvent.VK_RIGHT)  == false &&
                 inputListener.isKeyPressed(KeyEvent.VK_LEFT)  == false){
             renderer().setRenderable(standing);
-            this.Energy = Math.min(MAX_ENERGY,Energy + ONE);
+            this.Energy = Math.min(MAX_ENERGY,Energy + ONE_FACTOR);
         }
         transform().setVelocityX(xVel);
     }

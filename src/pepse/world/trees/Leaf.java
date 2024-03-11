@@ -10,11 +10,16 @@ import pepse.PepseGameManager;
 import java.awt.*;
 import java.util.Random;
 
+/***
+ * the leaf object
+ */
 public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver {
+    /***
+     * the leaf tag to place in specific layer
+     */
     public static final String LEAF = "leaf";
     private static final float LOW_ANGLE_BOUND = -30f;
     private static final float HIGH_ANGLE_BOUND = 30f;
-    private static final float TEN = 10;
     private static final float LOW_WIDTH_BOUND = 7f;
     private static final float HIGH_WIDTH_BOUND = 10f;
     private static final Color COLOR = new Color(50,200,30);
@@ -61,7 +66,10 @@ public class Leaf extends GameObject implements pepse.world.trees.AvatarObserver
                 Transition.TransitionType.TRANSITION_BACK_AND_FORTH, null);
     }
 
-    public void updateJump(){/
+    /***
+     * in case the avatar jumped the leaf will transfor its angle by 90 deg
+     */
+    public void updateJump(){
         new Transition<>(
                 this,
                 (angle)-> this.renderer().setRenderableAngle((float)angle),

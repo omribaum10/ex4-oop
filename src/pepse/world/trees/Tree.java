@@ -14,21 +14,22 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/***
+ * responsible on stem, flora and fruit for each tree
+ */
 public class Tree {
     /**
-     *
+     *the wanted range color to the tree stem
      */
     public static final Color TREECOLOR = new Color(100, 50, 20);
     private static final Color LEAF_COLOR = new Color(50,200,30);
     /**
-     *
+     *the wanted range color to the tree fruit
      */
     public static final Color FRUIT_COLOR = new Color(80,20,70);
     private static final int PROBABILITYHIGH = 8;
     private static final int PROBABILITYLOW = 5;
     private static final int HALFOFLEAFSQURE = 2;
-    private static final int ZERO = 0;
-    private static final int ONE = 1;
     private static final int FULLLEAFSQUARESIZE = 4;
     private static final int ONE_FACTOR = 1;
     private ArrayList<GameObject> lst;
@@ -57,7 +58,7 @@ public class Tree {
 
     private void RandomHeightStem(){
         Random rand = new Random();
-        int height = rand.nextInt(PROBABILITYHIGH - PROBABILITYLOW + ONE) + PROBABILITYLOW;
+        int height = rand.nextInt(PROBABILITYHIGH - PROBABILITYLOW + ONE_FACTOR) + PROBABILITYLOW;
         this.StemHeight = height;
         Vector2 stemsize =
                 new Vector2(Block.SIZE, height *Block.SIZE);
@@ -87,9 +88,9 @@ public class Tree {
         float YTopcoForSqure = treetop.y() - (Block.SIZE * HALFOFLEAFSQURE);
         float YBottomcoForSqure = treetop.y() + (Block.SIZE * HALFOFLEAFSQURE);
         int new_min_range = (int) ((XmincoForSqure / Block.SIZE) * Block.SIZE);
-        int new_max_range = (int) (Math.ceil(XmaxcoForSqure / Block.SIZE) + ONE) * Block.SIZE;
+        int new_max_range = (int) (Math.ceil(XmaxcoForSqure / Block.SIZE) + ONE_FACTOR) * Block.SIZE;
         int new_top_range = (int) ((YTopcoForSqure / Block.SIZE) * Block.SIZE);
-        int new_bootom_range = (int) (Math.ceil((YBottomcoForSqure / Block.SIZE) + ONE) * Block.SIZE);
+        int new_bootom_range = (int) (Math.ceil((YBottomcoForSqure / Block.SIZE) + ONE_FACTOR) * Block.SIZE);
         for (int row = 0; row < FULLLEAFSQUARESIZE; row++) {
             for (int col = 1; col <= FULLLEAFSQUARESIZE; col++) {
                 int random = rand.nextInt(FULLLEAFSQUARESIZE);
@@ -118,6 +119,10 @@ public class Tree {
         }
     }
 
+    /***
+     * returns the list of the tree objects
+     * @return
+     */
     public ArrayList<GameObject> GetList(){
         return lst;
     }

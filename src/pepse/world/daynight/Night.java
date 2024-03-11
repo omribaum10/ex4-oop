@@ -8,7 +8,6 @@ import danogl.util.Vector2;
 import java.awt.*;
 public class Night {
     private static final float LIGHT = 0f;
-    private static final String NIGHT_TAG = "night";
     private static final float DARK = 0.5f;
 
 
@@ -17,7 +16,6 @@ public class Night {
         RectangleRenderable NightRectangle = new RectangleRenderable(Color.BLACK);
         GameObject night = new GameObject(Vector2.ZERO, windowDimensions, NightRectangle);
         night.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
-        night.setTag(NIGHT_TAG);
 
         // Creates a day cycle increasing and decreasing the opacity
         new Transition<>(night, night.renderer()::setOpaqueness, LIGHT, DARK,
