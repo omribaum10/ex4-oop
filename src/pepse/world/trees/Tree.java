@@ -18,10 +18,6 @@ import java.util.Random;
  * responsible on stem, flora and fruit for each tree
  */
 public class Tree {
-    /**
-     *the wanted range color to the tree stem
-     */
-    public static final Color TREECOLOR = new Color(100, 50, 20);
     private static final Color LEAF_COLOR = new Color(50,200,30);
     /**
      *the wanted range color to the tree fruit
@@ -62,11 +58,9 @@ public class Tree {
         this.StemHeight = height;
         Vector2 stemsize =
                 new Vector2(Block.SIZE, height *Block.SIZE);
-        RectangleRenderable stem_image =
-                new RectangleRenderable(ColorSupplier.approximateColor(TREECOLOR));
         Vector2 location =
                 new Vector2(topleft.x(), topleft.y() - ((height - ONE_FACTOR) * Block.SIZE));
-        Block stem = new Block(location,stemsize,stem_image);
+        Stem stem = new Stem(location,stemsize);
         lst.add(stem);
         Avatar.AddObserver(stem);
     }
