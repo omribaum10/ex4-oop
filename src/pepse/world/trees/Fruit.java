@@ -17,7 +17,6 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
     private static final String DELAYED_STATE = "delayed fruit";
     private static final int DELAY_TIME = 30;
     private static Renderable renderable;
-    private static String state;
 
     /**
      * Construct a new fruit GameObject instance.
@@ -32,7 +31,7 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
                  Vector2 dimensions,
                  Renderable renderable) {
         super(topLeftCorner, dimensions, renderable);
-        this.state = FRUIT;
+        super.setTag(FRUIT);
         this.renderable = renderable;
     }
 
@@ -47,9 +46,9 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
         if(other.getTag().equals(Avatar.AVATAR_TAG)){
-            if(state.equals(FRUIT)){
+            if(super.getTag().equals(FRUIT)){
                 Avatar.addEnergy();
-                state = DELAYED_STATE;
+                super.setTag(DELAYED_STATE);
                 this.renderer().setRenderable(null);
                 new ScheduledTask(
                         this, DELAY_TIME,
@@ -60,7 +59,7 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
     }
 
     private void activateFruit(){
-        state = FRUIT;
+        super.setTag( FRUIT);
         this.renderer().setRenderable(renderable);
     }
 
@@ -68,7 +67,7 @@ public class Fruit extends GameObject implements pepse.world.trees.AvatarObserve
      * in case the avatar jumped the fruit will change its color
      */
     public void updateJump(){
-        if(state.equals(FRUIT)){
+        if(super.getTag().equals(FRUIT)){
             OvalRenderable new_image =  new OvalRenderable(ColorSupplier.approximateColor(Tree.FRUIT_COLOR));
             renderable = new_image;
             this.renderer().setRenderable(new_image);
