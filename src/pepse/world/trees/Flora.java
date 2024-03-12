@@ -11,7 +11,8 @@ import java.util.Vector;
 import java.util.function.Function;
 
 /***
- *
+ * @omri baum and ayaelet hashahar valevy
+ * creates the trees and fruits on given range
  */
 public class Flora {
     private static final int PROBABILITY = 10;
@@ -19,7 +20,13 @@ public class Flora {
     private static final double ONE_RANGE = 1;
     private static final int COIN_FLIP = 9;
 
-
+    /**
+     *
+     * @param minX left edge of the range
+     * @param maxX right end of range
+     * @param func calaulates the ground height at given x
+     * @return hasjmap of <location, Tree parts list>
+     */
     public static HashMap<Vector2, Tree> createInRange(
             int minX, int maxX, Function<Integer, Float> func) {
         HashMap<Vector2, Tree> res =

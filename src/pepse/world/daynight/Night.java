@@ -6,11 +6,21 @@ import danogl.gui.rendering.RectangleRenderable;
 import danogl.util.Vector2;
 
 import java.awt.*;
+
+/**
+ * @author omri baum ayeylet hashhar halevy
+ * creates a rectangle to blacken the screen
+ */
 public class Night {
     private static final float LIGHT = 0f;
     private static final float DARK = 0.5f;
 
-
+    /**
+     *
+     * @param windowDimensions to modify rectangle dimensions
+     * @param cycleLength of day and night
+     * @return Gameobject responsible of day and night
+     */
     public static GameObject create(Vector2 windowDimensions,
                                     float cycleLength){
         RectangleRenderable NightRectangle = new RectangleRenderable(Color.BLACK);
