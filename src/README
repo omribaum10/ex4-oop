@@ -16,6 +16,9 @@ It declares a single method updateJump() which specifies the action to be taken 
 Flora Class:
 responsible for generating trees within a specified range. It contains a method createInRange() that
 creates trees based on certain conditions and returns them as a HashMap.
+utilize the Terrain instance method GroundheightAt to put the trees on surface.
+it gets the func by a callback - terrain instace is instanciated in the
+game manager and sends it's func to Flora static methos as an argument.
 
 Fruit Class:
 The Fruit class represents the behavior of fruit objects in the game. It implements the AvatarObserver
