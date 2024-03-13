@@ -10,6 +10,9 @@ import pepse.world.Block;
 
 import java.awt.*;
 
+/***
+ * an object representing the tree stem
+ */
 public class Stem extends GameObject implements AvatarObserver {
     private static final Color TREECOLOR = new Color(100, 50, 20);
 

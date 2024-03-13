@@ -1,0 +1,44 @@
+omribaum, ayelet.h
+315216853, 212745772
+
+====================================================
+= README for ex4:   pepse                        =
+====================================================
+
+==============================
+=           trees           =
+==============================
+AvatarObserver Interface:
+based on the observer pattern this interface defines a contract for objects that need to respond to
+the avatar's jump action.
+It declares a single method updateJump() which specifies the action to be taken when the avatar jumps.
+
+Flora Class:
+responsible for generating trees within a specified range. It contains a method createInRange() that
+creates trees based on certain conditions and returns them as a HashMap.
+
+Fruit Class:
+The Fruit class represents the behavior of fruit objects in the game. It implements the AvatarObserver
+interface. This means that fruit objects will change it color in response to the avatar's jump action
+and will handle collisions with the avatar by adding energy and disapear for 30 sec.
+
+Leaf Class:
+The Leaf class represents leaf objects in the game. it implements AvatarObserver which means that leaf
+will responds to the avatar's jump action by changing its angle.
+
+Stem Class:
+The Stem class represents the stem object of a tree in the game. It implements AvatarObserver which means
+that when the avatar jumps, the stem changes its color.
+
+Tree Class:
+The Tree class is responsible for generating and managing tree objects in the game world - would be the
+container to all tree object. It contains methods to create stems and various components of trees, such as
+leaves and fruits. The GetList() method returns a list of all objects belonging to the tree.
+
+Relationships:
+All classes in this module representing the flora for the game.
+Fruit, Leaf, and Stem classes implements the AvatarObserver interface, indicating that they respond to the
+avatar's jump action in some way.
+The Tree class uses objects of Stem, Leaf, and Fruit classes to construct a complete representation of a tree.
+Overall, these classes work together to create and simulate trees within the game environment, with each class
+handling specific object of the tree by behavior and appearance.
