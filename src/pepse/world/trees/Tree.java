@@ -1,7 +1,7 @@
 package pepse.world.trees;
 
 import danogl.GameObject;
-import danogl.components.GameObjectPhysics;
+import danogl.collisions.Layer;
 import danogl.gui.rendering.OvalRenderable;
 import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
@@ -12,6 +12,7 @@ import pepse.world.Block;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /***
@@ -29,7 +30,7 @@ public class Tree {
     private static final int HALFOFLEAFSQURE = 2;
     private static final int FULLLEAFSQUARESIZE = 4;
     private static final int ONE_FACTOR = 1;
-    private ArrayList<GameObject> lst;
+    private HashMap<GameObject, Integer> lst;
     private Vector2 topleft;
     private int StemHeight;
 
@@ -46,10 +47,10 @@ public class Tree {
     public Tree(Vector2 topLeftCorner,
                 Vector2 dimensions,
                 Renderable renderable) {
-        this.lst = new ArrayList<>();
+        this.lst = new HashMap<>();
         topleft = topLeftCorner;
         RandomHeightStem();
-        Randomleaves();
+        randomTreeTop();
     }
 
 
@@ -62,7 +63,7 @@ public class Tree {
         Vector2 location =
                 new Vector2(topleft.x(), topleft.y() - ((height - ONE_FACTOR) * Block.SIZE));
         Stem stem = new Stem(location,stemsize);
-        lst.add(stem);
+        lst.put(stem, Layer.STATIC_OBJECTS);
         Avatar.AddObserver(stem);
     }
 
@@ -70,7 +71,7 @@ public class Tree {
     /**
      *
      */
-    private void Randomleaves(){
+    private void randomTreeTop(){
         //leaf size equals to block size!
         Random rand = new Random();
         RectangleRenderable leaf_image =
@@ -97,7 +98,7 @@ public class Tree {
                                             Block.SIZE/ HALFOFLEAFSQURE),
                                     fruit_image);
                     Avatar.AddObserver(fruit);
-                    lst.add(fruit);
+                    lst.put(fruit, Layer.STATIC_OBJECTS);
                 }
                 if(random <= HALFOFLEAFSQURE){
                     Leaf leaf = new Leaf(
@@ -107,7 +108,7 @@ public class Tree {
                                     Block.SIZE/ FULLLEAFSQUARESIZE),
                             leaf_image);
                     Avatar.AddObserver(leaf);
-                    lst.add(leaf);
+                    lst.put(leaf, Layer.BACKGROUND);
                 }
 
             }
@@ -115,10 +116,10 @@ public class Tree {
     }
 
     /***
-     * returns the list of the tree objects
-     * @return
+     * returns the map of the tree objects
+     * @return map of object with value of wanted layer
      */
-    public ArrayList<GameObject> GetList(){
+    public HashMap<GameObject,Integer> getSet(){
         return lst;
     }
 }

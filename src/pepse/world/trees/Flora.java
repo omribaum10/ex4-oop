@@ -4,10 +4,7 @@ import danogl.util.Vector2;
 import pepse.world.Block;
 import pepse.world.Terrain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Vector;
+import java.util.*;
 import java.util.function.Function;
 
 /***
@@ -27,10 +24,10 @@ public class Flora {
      * @param func calaulates the ground height at given x
      * @return hasjmap of <location, Tree parts list>
      */
-    public static HashMap<Vector2, Tree> createInRange(
+    public static HashSet<Tree> createInRange(
             int minX, int maxX, Function<Integer, Float> func) {
-        HashMap<Vector2, Tree> res =
-                new HashMap<>();
+        HashSet<Tree> res =
+                new HashSet<>();
         Random rand = new Random();
 
         int new_min_range = (minX / Block.SIZE) * Block.SIZE;
@@ -48,7 +45,7 @@ public class Flora {
                         rawy);
                 Tree tree =
                         new Tree(location, Vector2.ZERO, null);
-                res.put(location, tree);
+                res.add(tree);
                 }
             }
             return res;

@@ -16,10 +16,7 @@ import pepse.world.trees.Flora;
 import pepse.world.trees.Leaf;
 import pepse.world.trees.Tree;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * game manager class
@@ -141,18 +138,11 @@ public class PepseGameManager extends GameManager {
      */
 
     private void CreateTrees(Vector2 windowDimensions, Terrain terrain) {
-        HashMap<Vector2, Tree> map =
+        HashSet<Tree> trees =
                 Flora.createInRange(START, (int) windowDimensions.x(), terrain::groundHeightAt);
-        for (Map.Entry<Vector2, Tree> entry : map.entrySet()) {
-            Tree tree = entry.getValue();
-            for (GameObject object : tree.GetList()) {
-                if (object.getTag().equals(Leaf.LEAF)) {
-                    gameObjects().addGameObject(object, Layer.BACKGROUND);
-                } else {
-                    {
-                        gameObjects().addGameObject(object, Layer.STATIC_OBJECTS);
-                    }
-                }
+        for (Tree tree : trees) {
+            for (Map.Entry<GameObject,Integer> entry : tree.getSet().entrySet())  {
+                gameObjects().addGameObject(entry.getKey(), entry.getValue());
             }
         }
     }
