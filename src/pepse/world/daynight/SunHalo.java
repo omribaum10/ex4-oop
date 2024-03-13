@@ -6,6 +6,10 @@ import danogl.util.Vector2;
 
 import java.awt.*;
 
+/**
+ * @author omri baum and ayaelet hashhar halevy
+ * rounds the sun gameobject
+ */
 public class SunHalo {
     private static final Color BASE_GROUND_COLOR =
             new Color(255, 255, 0, 20);
@@ -13,9 +17,9 @@ public class SunHalo {
 
     /**
      *
-     * @param windowDimensions WINDOW DIMENSIONS
+     * @param windowDimensions WINDOW DIMENSIONS to put on board
      * @param cycleLength time of life cyclelength
-     * @return sun gameobject
+     * @return sun Halo gameobject
      */
     public static GameObject create(GameObject sun){
         float sun_koter = SUN_HALO_KOTER;

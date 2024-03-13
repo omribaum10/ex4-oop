@@ -8,6 +8,10 @@ import danogl.util.Vector2;
 
 import java.awt.*;
 
+/**
+ * @author omri baum and ayelet hashhar halevy
+ * creates the sun gameobhect thet cycles on screen
+ */
 public class Sun {
 
 

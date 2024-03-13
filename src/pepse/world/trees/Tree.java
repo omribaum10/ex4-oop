@@ -19,6 +19,7 @@ import java.util.Random;
  */
 public class Tree {
     private static final Color LEAF_COLOR = new Color(50,200,30);
+
     /**
      *the wanted range color to the tree fruit
      */
