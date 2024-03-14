@@ -14,6 +14,9 @@ import pepse.world.trees.Tree;
  * @author עמרי באום
  */
 public class Block extends GameObject{
+    /**
+     * size of standart Block
+     */
     public static final int SIZE = 30;
     /**
      * Construct a new GameObject instance.

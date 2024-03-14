@@ -6,5 +6,9 @@ package pepse.world;
  */
 @FunctionalInterface
 public interface EnergyUpdateCallback {
+    /**
+     *
+     * @return energy rate of singelto Avatar instance
+     */
     public float GetEnergyRate();
 }

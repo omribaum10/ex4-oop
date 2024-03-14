@@ -38,9 +38,12 @@ public class Sun {
         Vector2 initialSunCenter =
                 new Vector2(windowDimensions.x() / DOUBLE, WINDOW_FACTOR * windowDimensions.y());
         //create transition for the sun
-        Vector2 cycleCenter = new Vector2(windowDimensions.x() / DOUBLE, DOUBLE * WINDOW_FACTOR * windowDimensions.y());
+        Vector2 cycleCenter =
+                new Vector2(windowDimensions.x() / DOUBLE,
+                        DOUBLE * WINDOW_FACTOR * windowDimensions.y());
         new Transition<>(sun,
-                (Float angle) -> sun.setCenter(initialSunCenter.subtract(cycleCenter).rotated(angle).add(cycleCenter)),
+                (Float angle) -> sun.setCenter
+                        (initialSunCenter.subtract(cycleCenter).rotated(angle).add(cycleCenter)),
                 INITIAL_VALUR, FINAL_VALUE,
                 Transition.LINEAR_INTERPOLATOR_FLOAT,
                 //might be a problen with long lifesycle!!!!
